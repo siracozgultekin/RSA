@@ -320,8 +320,7 @@ function App() {
             <div>nonencryptedDecArr: {nonencryptedDecArr.join(", ")}</div>
             <div>hexStr:: {hexStr}</div>
             <p>
-              Reversed plaintext:{" "}
-              {String.fromCharCode(...nonencryptedDecArr.reverse())}
+              Reversed plaintext: {String.fromCharCode(...nonencryptedDecArr)}
             </p>
           </div>
         </TabsContent>
