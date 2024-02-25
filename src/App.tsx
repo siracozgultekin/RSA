@@ -19,7 +19,9 @@ function App() {
   const [nonencryptedDecArr, setNonencryptedDecArr] = useState<number[]>([]);
   const [encryptedDecArr, setEncryptedDecArr] = useState<number[]>([]);
   const [hexStr, setHexStr] = useState<string>("");
-
+  const [reversedEncryptedDecArr, setReversedEncryptedDecArr] = useState<
+    number[]
+  >([]);
   const checkPrime = (num: number) => {
     for (let i = 2; i < num; i++) {
       // 2'den başlayarak num'a kadar olan sayıları döngüye sokuyoruz. çünkü en küçük asal sayı 2'dir
@@ -116,6 +118,7 @@ function App() {
         let dec = parseInt(hex, 16);
         decArr.push(dec);
       }
+      setReversedEncryptedDecArr(decArr);
       resolve(decArr);
     });
   };
@@ -175,15 +178,15 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-full items-center bg-slate-300">
+    <div className="flex flex-col h-full items-center bg-slate-300 bg-image">
       <Tabs defaultValue="keyselection" className="w-[700px] h-[500px]">
         <TabsList>
-          <TabsTrigger value="keyselection">key selection</TabsTrigger>
-          <TabsTrigger value="encryption">encryption</TabsTrigger>
-          <TabsTrigger value="decryption">decryption</TabsTrigger>
+          <TabsTrigger value="keyselection">Key Selection</TabsTrigger>
+          <TabsTrigger value="encryption">Encryption</TabsTrigger>
+          <TabsTrigger value="decryption">Decryption</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="keyselection">
+        <TabsContent value="keyselection" className="rounded-sm">
           <div className="h-[600px] items-center flex flex-col gap-8">
             <div className=" flex w-full justify-between p-10">
               <div className="flex gap-2">
@@ -252,9 +255,9 @@ function App() {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="encryption">
+        <TabsContent value="encryption" className="rounded-sm">
           {" "}
-          <div className="h-[600px] items-center flex flex-col gap-8">
+          <div className="h-[600px] items-center flex flex-col gap-12 py-3">
             <div className=" flex w-full justify-between p-10">
               <div className="flex gap-2">
                 <p>Your Public key is (e),(n) </p>
@@ -263,7 +266,6 @@ function App() {
                   <span className="bg-slate-200 px-2 mx-2">{n}</span>,
                 </p>
               </div>
-              <Button>Copy</Button>
             </div>{" "}
             <div className="flex">
               <p>Enter plaintext:</p>
@@ -290,8 +292,8 @@ function App() {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="decryption">
-          <div className="h-[600px] items-center flex flex-col gap-8">
+        <TabsContent value="decryption" className="rounded-sm">
+          <div className="h-[600px] items-center flex flex-col gap-12 py-2">
             <div className=" flex w-full justify-between p-10">
               <div className="flex gap-2">
                 <p>Your Private key is (d),(n) </p>
@@ -300,15 +302,14 @@ function App() {
                   <span className="bg-slate-200 px-2 mx-2">{n}</span>,
                 </p>
               </div>
-              <Button>Copy</Button>
             </div>
-            <p>your ciphertext {hexStr}</p>
+
             <div className="flex">
               <p>Enter Ciphertext:</p>
               <input
                 value={ciphertext}
                 type="text"
-                className="h-fit "
+                className="h-fit px-2 "
                 onChange={(e) => {
                   setCiphertext(e.target.value);
                 }}
@@ -317,10 +318,20 @@ function App() {
             <Button className="mt-5" onClick={decrypt}>
               Decrypt
             </Button>
-            <div>nonencryptedDecArr: {nonencryptedDecArr.join(", ")}</div>
-            <div>hexStr:: {hexStr}</div>
+            {/* <div>nonencryptedDecArr: {nonencryptedDecArr.join(", ")}</div> */}
+            <div>
+              PlainText(int):{" "}
+              <span className="bg-slate-200 px-2 mx-2">
+                {" "}
+                {reversedEncryptedDecArr.join(", ")}
+              </span>
+            </div>
+
             <p>
-              Reversed plaintext: {String.fromCharCode(...nonencryptedDecArr)}
+              Plaintext:{" "}
+              <span className="bg-slate-200 px-2 mx-2">
+                {String.fromCharCode(...nonencryptedDecArr)}
+              </span>
             </p>
           </div>
         </TabsContent>

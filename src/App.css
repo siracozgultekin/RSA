@@ -16,3 +16,8 @@
   }
 }
 
+.bg-image {
+  background-image: url('./assets/bg4.jpg');
+  background-size: cover;
+  background-position: center;
+}
