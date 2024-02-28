@@ -52,6 +52,11 @@ function App() {
       return;
     }
 
+    if (p * q < 127) {
+      toast.error("Please enter greater prime numbers");
+      return;
+    }
+
     setN(p * q);
     setZ((p - 1) * (q - 1));
   };
